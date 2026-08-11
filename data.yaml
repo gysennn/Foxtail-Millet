@@ -1,0 +1,27 @@
+# Foxtail Millet Pest and Disease Detection Dataset
+# YOLO detection dataset configuration
+# Dataset root directory
+# path: Foxtail-Millet
+path: .
+
+# Image directories
+train: images/train
+val: images/val
+test: images/test
+
+# Number of classes
+nc: 11
+
+# Class names
+names:
+  0: Stem borer larva
+  1: Stem borer adult
+  2: Stem borer damage
+  3: Water-soaked lesion
+  4: Hedgehog-like panicle
+  5: Spear-like stalk
+  6: Gray-back symptom
+  7: Leaf spot
+  8: Leaf beetle
+  9: Leaf beetle damage
+  10: Dead-heart symptom
