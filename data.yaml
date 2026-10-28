@@ -10,18 +10,17 @@ val: images/val
 test: images/test
 
 # Number of classes
-nc: 11
+nc: 10
 
 # Class names
 names:
-  0: Stem borer larva
-  1: Stem borer adult
-  2: Stem borer damage
+  0: Foxtail millet leaf spot
+  1: Leaf beetle larva
+  2: Leaf beetle damage symptom
   3: Water-soaked lesion
-  4: Hedgehog-like panicle
-  5: Spear-like stalk
-  6: Gray-back symptom
-  7: Leaf spot
-  8: Leaf beetle
-  9: Leaf beetle damage
-  10: Dead-heart symptom
+  4: Gray-back symptom
+  5: Spear-like stalk symptom
+  6: Hedgehog-like panicle
+  7: Millet stem borer larva
+  8: Millet stem borer adult
+  9: Dead-heart symptom

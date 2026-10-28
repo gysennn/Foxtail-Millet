@@ -1,40 +1,77 @@
-# Foxtail-Millet Pest and Disease Detection Dataset
+# Foxtail Millet Pest–Disease Detection Dataset
 
-This repository provides the dataset configuration, example images, and class definitions used for foxtail millet pest and disease detection.
+This repository provides the public metadata, category definitions, YOLO configuration, example images, and access information for the datasets used in:
 
-The dataset contains field RGB images collected under natural agricultural conditions and includes pest bodies, disease symptoms, and pest-induced host-damage symptoms. Annotations are provided in YOLO object-detection format.
+> **KGMA-Det: Structured Biological Knowledge-Guided Learning for Data-Scarce Foxtail Millet Pest-Disease Detection**
 
-## Dataset Access
+The study organizes pest individuals, disease manifestations, and pest-induced host damage within a fixed 10-category identity–state vocabulary.
 
-The complete dataset is available for academic research upon request.
+> **Availability note:** the complete image and annotation archives are not hosted in this repository. They are available for academic research upon reasonable request; see [Dataset Access](#dataset-access).
 
-To request access, please contact:
+## Dataset Overview
 
-**Yusen Guo**  
-Northwest A&F University  
-Email: **guoys@nwafu.edu.cn**
+The study uses two field RGB datasets:
 
-When requesting the dataset, please briefly state your name, affiliation, research purpose, and intended use of the data.
+- **2025 development dataset:** covers all 10 identity–state categories and contains **8,409 annotated object instances**. It was divided into training, validation, and internal-test subsets using source-grouped partitioning.
+- **Independent 2026 evaluation dataset:** covers five predefined categories and contains **446 annotated object instances**. It was reserved exclusively for cross-year external evaluation and was not used for training, augmentation, validation, hyperparameter selection, or reference sampling.
 
-## Dataset Categories
+The image counts in the tables below are **class-associated image occurrences**, not counts of unique images. One image may contain more than one category, so the column sums must not be interpreted as the number of unique source images.
 
-The dataset contains 11 fine-grained detection categories:
+## Data Collection and Annotation
+
+The 2025 field images were collected from June to August 2025 in Mizhi County, Yulin, Shaanxi Province, China. Images were acquired with an iPhone 15, Huawei nova 7 SE, and Redmi Note 14 at resolutions from 1600 × 2133 to approximately 3000 × 4000 pixels. The collection includes natural variation in illumination, viewpoint, viewing distance, occlusion, and plant growth stage.
+
+Images with severe blur, exposure errors, irrelevant content, unlocalizable targets, or ambiguous phenotypes were excluded. Duplicate and near-duplicate images were screened through manual inspection and image-similarity analysis. Two annotators labeled the retained images under the supervision of plant-protection specialists from the Mizhi Agricultural Experimental Station. Each object was assigned a bounding box and an identity–state label; biological descriptors used by the associated study additionally cover symptom attributes, affected organ, morphology, and relative scale.
+
+## 2025 Development Dataset Statistics
+
+| Biological target | Annotation dimension | Identity–state label | Image occurrences | Instances |
+|---|---|---|---:|---:|
+| Foxtail millet leaf spot | Lesion type | Foxtail millet leaf spot | 869 | 2,038 |
+| Leaf beetle | Developmental stage | Larva | 468 | 751 |
+| Leaf beetle | Damage symptom | Leaf beetle damage symptom | 492 | 871 |
+| Foxtail millet downy mildew | Vegetative-stage symptom | Water-soaked lesion | 983 | 1,813 |
+| Foxtail millet downy mildew | Vegetative-stage symptom | Gray-back symptom | 189 | 236 |
+| Foxtail millet downy mildew | Reproductive-stage symptom | Spear-like stalk symptom | 705 | 780 |
+| Foxtail millet downy mildew | Reproductive-stage symptom | Hedgehog-like panicle | 693 | 775 |
+| Millet stem borer | Developmental stage | Larva | 671 | 813 |
+| Millet stem borer | Developmental stage | Adult | 66 | 71 |
+| Millet stem borer | Damage symptom | Dead-heart symptom | 167 | 261 |
+| **Column sum** |  |  | **5,303** | **8,409** |
+
+## Independent 2026 Evaluation Dataset Statistics
+
+| Biological target | Annotation dimension | Identity–state label | Image occurrences | Instances |
+|---|---|---|---:|---:|
+| Leaf beetle | Pest developmental stage | Larva | 71 | 201 |
+| Foxtail millet downy mildew | Vegetative stage | Water-soaked lesion | 56 | 89 |
+| Foxtail millet downy mildew | Vegetative stage | Gray-back symptom | 39 | 47 |
+| Millet stem borer | Pest developmental stage | Larva | 40 | 80 |
+| Millet stem borer | Damage symptom | Dead-heart symptom | 29 | 29 |
+| **Column sum** |  |  | **235** | **446** |
+
+## Detection Categories
+
+The model uses the following 10 class IDs:
 
 | ID | Class |
 |---:|---|
-| 0 | Stem borer larva |
-| 1 | Stem borer adult |
-| 2 | Stem borer damage |
+| 0 | Foxtail millet leaf spot |
+| 1 | Leaf beetle larva |
+| 2 | Leaf beetle damage symptom |
 | 3 | Water-soaked lesion |
-| 4 | Hedgehog-like panicle |
-| 5 | Spear-like stalk |
-| 6 | Gray-back symptom |
-| 7 | Leaf spot |
-| 8 | Leaf beetle |
-| 9 | Leaf beetle damage |
-| 10 | Dead-heart symptom |
+| 4 | Gray-back symptom |
+| 5 | Spear-like stalk symptom |
+| 6 | Hedgehog-like panicle |
+| 7 | Millet stem borer larva |
+| 8 | Millet stem borer adult |
+| 9 | Dead-heart symptom |
 
-The class IDs above are consistent with the labels defined in `data.yaml`.
+These class IDs are consistent with `data.yaml`.
+
+## Dataset Partitioning
+
+The 2025 data were divided into training, validation, and internal-test subsets using source-grouped partitioning. Images from the same plant, acquisition burst, or near-duplicate source were assigned to the same subset to reduce information leakage. Training-dependent procedures were restricted to the training subset, the validation subset was used for model selection, and the internal-test subset was reserved for final evaluation.
 
 ## Annotation Format
 
@@ -44,79 +81,59 @@ Annotations follow the standard YOLO object-detection format:
 class_id x_center y_center width height
 ```
 
-All bounding-box coordinates are normalized to the range `[0, 1]`.
+All bounding-box coordinates are normalized to `[0, 1]`.
 
-## Repository Structure
+## Repository Contents
 
 ```text
 Foxtail-Millet/
-├── example/
-│   └── ...
-├── data.yaml
+├── example/       # Representative field images
+├── data.yaml     # YOLO dataset configuration and class mapping
+├── LICENSE
 └── README.md
 ```
 
-- `example/`: example images for visual inspection.
-- `data.yaml`: dataset configuration and class-name mapping.
-- `README.md`: dataset description and access information.
+The repository contains representative examples only; it does not contain the complete dataset archive.
 
-## Example `data.yaml`
+## Dataset Access
 
-```yaml
-path: .
+The complete datasets are available for academic research upon reasonable request. To request access, contact:
 
-train: images/train
-val: images/val
-test: images/test
+**Yusen Guo**<br>
+Northwest A&F University<br>
+Email: **guoys@nwafu.edu.cn**
 
-nc: 11
-
-names:
-  0: Stem borer larva
-  1: Stem borer adult
-  2: Stem borer damage
-  3: Water-soaked lesion
-  4: Hedgehog-like panicle
-  5: Spear-like stalk
-  6: Gray-back symptom
-  7: Leaf spot
-  8: Leaf beetle
-  9: Leaf beetle damage
-  10: Dead-heart symptom
-```
+Please include your name, affiliation, research purpose, and intended use. Access to the complete dataset does not grant permission to redistribute it to third parties.
 
 ## Intended Use
 
-This dataset is intended for research on:
+The datasets are intended for research on:
 
-- foxtail millet pest and disease detection;
-- few-shot object detection;
-- class-imbalanced agricultural vision;
-- lightweight object detection;
-- intelligent crop monitoring.
+- foxtail millet pest–disease detection;
+- data-scarce and class-imbalanced agricultural vision;
+- object detection under natural field conditions;
+- lightweight crop-monitoring models;
+- cross-year evaluation of agricultural detectors.
 
-## Data Use
+## License and Data Use
 
-The complete dataset is not directly hosted in this repository. Access is provided upon reasonable academic request.
+Repository materials are provided under the terms in [LICENSE](LICENSE). Access and redistribution conditions for the complete image and annotation archives are provided separately when dataset access is granted.
 
-Users should not redistribute the dataset to third parties without permission from the dataset authors. If the dataset is used in a publication, please acknowledge the dataset source and cite the associated paper once the citation information becomes available.
+If you use these datasets or repository materials in a publication, please cite the associated manuscript.
 
 ## Citation
 
-Citation information will be updated after publication of the associated work.
+The associated manuscript has not yet received final publication metadata. This section will be updated after publication.
 
 ```bibtex
-@article{KGMA-Det,
-  title   = {KGMA-Det: A Knowledge-Guided Modulation and Augmentation Detector with Multi-Scale Dilated Attention for Few-Shot Foxtail Millet Pest and Disease Detection},
-  author  = {To be updated},
-  journal = {To be updated},
-  year    = {2026}
+@unpublished{mao2026kgmadet,
+  title  = {KGMA-Det: Structured Biological Knowledge-Guided Learning for Data-Scarce Foxtail Millet Pest-Disease Detection},
+  author = {Mao, Rui and Guo, Yusen and Liu, Xing and Liu, Yiheng and Feng, Mingchen and Zhang, Hongming},
+  note   = {Manuscript},
+  year   = {2026}
 }
 ```
 
 ## Contact
 
-For dataset access or other questions, please contact:
-
-**Yusen Guo**  
-Email: **guoys@nwafu.edu.cn**
+For dataset access or repository questions, contact **Yusen Guo** at **guoys@nwafu.edu.cn**.
