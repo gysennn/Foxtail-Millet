@@ -121,18 +121,6 @@ Repository materials are provided under the terms in [LICENSE](LICENSE). Access 
 
 If you use these datasets or repository materials in a publication, please cite the associated manuscript.
 
-## Citation
-
-The associated manuscript has not yet received final publication metadata. This section will be updated after publication.
-
-```bibtex
-@unpublished{mao2026kgmadet,
-  title  = {KGMA-Det: Structured Biological Knowledge-Guided Learning for Data-Scarce Foxtail Millet Pest-Disease Detection},
-  author = {Mao, Rui and Guo, Yusen and Liu, Xing and Liu, Yiheng and Feng, Mingchen and Zhang, Hongming},
-  note   = {Manuscript},
-  year   = {2026}
-}
-```
 
 ## Contact
 
